@@ -66,13 +66,30 @@ gmsh.model.occ.remove([(1, curve_sep), (1, curve_outer)])
 gmsh.model.occ.synchronize()
 v = gmsh.model.occ.revolve([(2, pl)], 0, 0, 0, 0, 0, 1, 2*np.pi/3)
 gmsh.model.occ.synchronize()
-surface_loop = gmsh.model.occ.add_surface_loop(
-    [v_[1] for v_ in v if v_[0] == 2] + [pl])
+# Create 2D surfaces
+xDiMES = 1.485
+yDiMES = 0.0
+zDiMES = Z_Dimes
+rDiMES = 0.025
+
+TagDiMES0 = gmsh.model.occ.addDisk(xDiMES, yDiMES, zDiMES, rDiMES, rDiMES)
+
+gmsh.model.occ.rotate([(2, TagDiMES0)], 0, 0, 0, 0, 0, 1, 2*np.pi/3)
+# gmsh.fltk.run()
+surface_outer_target_final = gmsh.model.occ.cut(
+    [(2, 3)], [(2, TagDiMES0)], removeTool=False, removeObject=True)
+ids = surface_outer_target_final[0][0][1]
+idxss = [TagDiMES0] + [ids] + [v_[1]
+                               for v_ in v if (v_[0] == 2 and v_[1] != ids)] + [pl]
+surface_loop = gmsh.model.occ.add_surface_loop(idxss)
 vol = gmsh.model.occ.add_volume([surface_loop])
 gmsh.model.occ.remove([(3, 1)])
-gmsh.model.occ.remove(gmsh.model.get_entities(2))
-gmsh.model.occ.remove(gmsh.model.get_entities(1))
+# gmsh.model.occ.remove(gmsh.model.get_entities(2))
+# gmsh.model.occ.remove(gmsh.model.get_entities(1))
 gmsh.model.occ.synchronize()
+mesh = gmsh.model.mesh.generate(3)
+gmsh.fltk.run()
+gmsh.write("test_DiMES_7_meshed.msh")
 # %%
 # surface_o = [gmsh.model.occ.revolve(
 #     [(1, l)], 0, 0, 0, 0, 0, 1, 2*np.pi) for l in line_o]
@@ -113,10 +130,10 @@ gmsh.model.occ.synchronize()
 
 
 # Define DiMES cap surface
-# xDiMES = 1.485
-# yDiMES = 0.0
-# zDiMES = Z_Dimes
-# rDiMES = 0.025
+xDiMES = 1.485
+yDiMES = 0.0
+zDiMES = Z_Dimes
+rDiMES = 0.025
 
 # # Define small dot on DiMES cap surface
 # xsDot = -0.01 + xDiMES
@@ -154,11 +171,10 @@ gmsh.model.occ.synchronize()
 
 # # Generate 2D mesh
 # gmsh.model.mesh.setSize(v, 0.001)
-mesh = gmsh.model.mesh.generate(3)
+#
 
 # Launch the GUI to see the results:
-gmsh.fltk.run()
-gmsh.write("test_DiMES_meshed.stl")
+
 # Write mesh into a meshio format
 
 # %%
