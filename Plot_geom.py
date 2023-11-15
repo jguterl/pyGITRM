@@ -15,7 +15,7 @@ data=np.load('/users/nathd/pyGITRM/test_167196_contour.npy', allow_pickle=True).
 key_list=[k for k in data.keys()]
 
 
-epsilon=0.1
+epsilon=0.5
 
 plt.close('all')
 fig = plt.figure()
@@ -25,7 +25,7 @@ plt.plot(wall[:,0], wall[:,1], '-ok')
 wall_new=rdp(wall, epsilon)
 plt.plot(wall_new[:,0], wall_new[:,1], '-sr', markersize=12, markerfacecolor='none')
 wall_nx=np.array([wall_new[:,0], np.zeros(np.shape(wall_new)[0]),wall_new[:,1]])
-np.savetxt('wall_nx.txt', np.transpose(wall_nx))
+#np.savetxt('wall_nx.txt', np.transpose(wall_nx))
 
 core=np.array(data['core'])
 plt.plot(core[:,0], core[:,1], '-ob')
