@@ -67,9 +67,13 @@ gmsh.model.occ.synchronize()
 v = gmsh.model.occ.revolve([(2, pl)], 0, 0, 0, 0, 0, 1, 2*np.pi/3)
 gmsh.model.occ.synchronize()
 surface_loop = gmsh.model.occ.add_surface_loop(
-    [v_[1] for v_ in v if v_[0] == 2])
+    [v_[1] for v_ in v if v_[0] == 2] + [pl])
 vol = gmsh.model.occ.add_volume([surface_loop])
+gmsh.model.occ.remove([(3, 1)])
+gmsh.model.occ.remove(gmsh.model.get_entities(2))
+gmsh.model.occ.remove(gmsh.model.get_entities(1))
 gmsh.model.occ.synchronize()
+# %%
 # surface_o = [gmsh.model.occ.revolve(
 #     [(1, l)], 0, 0, 0, 0, 0, 1, 2*np.pi) for l in line_o]
 # surface_s = [gmsh.model.occ.revolve(
@@ -150,11 +154,11 @@ gmsh.model.occ.synchronize()
 
 # # Generate 2D mesh
 # gmsh.model.mesh.setSize(v, 0.001)
-# mesh = gmsh.model.mesh.generate(3)
+mesh = gmsh.model.mesh.generate(3)
 
 # Launch the GUI to see the results:
 gmsh.fltk.run()
-gmsh.write("test_DiMES10.stl")
+gmsh.write("test_DiMES_meshed.stl")
 # Write mesh into a meshio format
 
 # %%
