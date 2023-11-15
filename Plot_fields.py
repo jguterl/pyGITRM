@@ -3,7 +3,6 @@ import matplotlib
 from matplotlib.collections import PatchCollection
 import matplotlib.pyplot as plt
 
-
 data=np.load('/users/nathd/pyGITRM/test_167196_bgp_mesh.npy', allow_pickle=True).tolist()
 key_list=[k for k in data.keys() if k!='mesh']
 
@@ -13,7 +12,6 @@ mesh_array=np.array(data['mesh'])
 plt.close('all')
 
 #Fields
-
 for k in key_list:
     
     if data.get(k) is None:
