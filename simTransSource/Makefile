@@ -6,7 +6,7 @@
 #  to the copyright holder. Disclosure, use, or reproduction without 
 #  the written authorization of Simmetrix Inc. is prohibited. 
 # ******************************************************************/ 
-FNAME = simTranslateNoCore
+FNAME = simTranslate
 PROJECTROOT = /home/nathd/simmetrix
 PLATFORM = x64_rhel8_gcc83
 PVERS := 360
