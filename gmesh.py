@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Initialize gmsh session
 gmsh.initialize()
 
-data = np.load('/Users/jeromeguterl/development/gitrm/test_167196_contour.npy',
+data = np.load('test_167196_contour.npy',
                allow_pickle=True).tolist()
 
 
@@ -89,7 +89,8 @@ gmsh.model.occ.remove([(3, 1)])
 gmsh.model.occ.synchronize()
 mesh = gmsh.model.mesh.generate(3)
 gmsh.fltk.run()
-gmsh.write("test_DiMES_7_meshed.msh")
+gmsh.write("test_DiMES_8_meshed_49.stl")
+
 # %%
 # surface_o = [gmsh.model.occ.revolve(
 #     [(1, l)], 0, 0, 0, 0, 0, 1, 2*np.pi) for l in line_o]
